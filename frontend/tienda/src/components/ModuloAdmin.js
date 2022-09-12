@@ -2,12 +2,12 @@ import React from 'react'
 import { useRef, useState, useEffect } from 'react';
 //import { useHistory } from 'react-router-dom';
 import axios from "axios";
-import { useParams } from 'react-router';
-import { producto } from './producto';
+//import { useParams } from 'react-router';
+//import { producto } from './producto';
 
 export const ModuloAdmin = () => {
 
-  const url = 'http://127.0.0.1:3000/crearProducto2';
+  const url = 'http://127.0.0.1:3000/crearProducto';
 
   const [nombre, setNombre] = useState('');
   const [descripcion, setDescripcion] = useState('');
@@ -23,22 +23,21 @@ export const ModuloAdmin = () => {
 
   function onSubmit(e) {
     e.preventDefault();
-    console.log('base64');
-    console.log(imagen);
-    //const formData = new FormData();
-    //formData.append('imagen',imagen);
+    //console.log('base64');
+    //console.log(imagen);
+
     axios
       .post(url, {
         nombre: nombre,
         descripcion: descripcion,
-        //imagen: JSON.stringify(imagen),
         imagen: imagen,
         precio: precio,
         cantidad:cantidad        
       })
       .then((response) => {
         console.log(response.data);
-      });        
+        alert('Producto agregado');
+      }).error('Ocurrió un error inesperado');        
   }
 
   const convertToBase64 = (file) => {
@@ -58,7 +57,6 @@ export const ModuloAdmin = () => {
     const file = e.target.files[0];
     const base64 = await convertToBase64(file); 
     const imagenAux = base64.split(',');
-    //console.log(imagenAux[1]);  
     setImagen(imagenAux[1]); 
     //setImagen({ imagen, myFile: base64 });
   };
