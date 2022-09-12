@@ -6,6 +6,7 @@ create table producto
     nombre      varchar(100) null,
     descripcion varchar(200) null,
     URLimage    varchar(700) null,
+    imagen		longblob,
     precio      float        null,
     cantidad    int          null
 );
