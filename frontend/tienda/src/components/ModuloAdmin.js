@@ -8,11 +8,13 @@ import axios from "axios";
 export const ModuloAdmin = () => {
 
   const url = 'http://127.0.0.1:3000/crearProducto';
+  const urlS3 = 'http://127.0.0.1:3000/crearProductoS3';
 
   const [nombre, setNombre] = useState('');
   const [descripcion, setDescripcion] = useState('');
-  const [urlImage, setUrlImage] = useState(''); // url para S3
-  const [imagen, setImagen] = useState('');
+  const [urlImage, setUrlImage] = useState(''); // URL para S3
+  const [imagen, setImagen] = useState(''); // Base64
+  const [nombreImagen, setNombreImagen] = useState('');
   /*const [imagen, setImagen] = useState({
     myFile: "",
   });*/
@@ -26,18 +28,33 @@ export const ModuloAdmin = () => {
     //console.log('base64');
     //console.log(imagen);
 
-    axios
+    /*axios
       .post(url, {
         nombre: nombre,
         descripcion: descripcion,
         imagen: imagen,
+        nombreImagen: nombreImagen,
         precio: precio,
         cantidad:cantidad        
       })
       .then((response) => {
         console.log(response.data);
         alert('Producto agregado');
-      }).error('Ocurrió un error inesperado');        
+      }); */
+      
+      axios
+      .post(urlS3, {
+        nombre: nombre,
+        descripcion: descripcion,
+        imagen: imagen,
+        nombreImagen: nombreImagen,
+        precio: precio,
+        cantidad:cantidad        
+      })
+      .then((response) => {
+        console.log(response.data);
+        alert('Producto agregado S3');
+      }); 
   }
 
   const convertToBase64 = (file) => {
@@ -54,6 +71,7 @@ export const ModuloAdmin = () => {
   };
   
   const handleFileUpload = async (e) => {
+    setNombreImagen(e.target.files[0].name);
     const file = e.target.files[0];
     const base64 = await convertToBase64(file); 
     const imagenAux = base64.split(',');
@@ -88,7 +106,7 @@ export const ModuloAdmin = () => {
                   //value={ urlImage }
                   //onChange={ (e) => setUrlImage(e.target.value) }
                   //onChange={(e) => console.log(e.target.files[0])}
-                  accept= ".jpeg, .png, .jpg"
+                  accept= ".jpg"
                   onChange={handleFileUpload}/>
             
           </div>
