@@ -4,7 +4,7 @@
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
-##Paquetes requeridos
+## Paquetes requeridos en la aplicación
 
 ### `npm install react-use-cart`
 ### `npm install react-router-dom@6`
